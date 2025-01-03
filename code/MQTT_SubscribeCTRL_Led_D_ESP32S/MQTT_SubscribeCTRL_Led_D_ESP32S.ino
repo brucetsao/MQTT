@@ -1,10 +1,10 @@
 #include <String.h>   //String 使用必備函示庫
-#include "initPins.h"
-#include "MQTT.h"
+#include "initPins.h" //宣告開發版所有GPIO與WIFI與共用函式區
+#include "MQTT.h"   //MQTT Broker與Json處理等函式區
 
 //--------------------
- void connectMQTT() ;
- void mycallback(char* topic, byte* payload, unsigned int length)  ;
+ void connectMQTT() ; // MQTT 連線函數
+ void mycallback(char* topic, byte* payload, unsigned int length)  ;   // 訂閱訊息的回傳呼叫函數
 //----------------
 
 // the setup function runs once when you press reset or power the board
@@ -44,10 +44,10 @@ void loop()
 
 void initAll()     //系統初始化
 {
-    Serial.begin(9600) ;
-    Serial.println("System Start");
+    Serial.begin(9600) ;  //開啟監控通訊埠，並設定9600 bps通訊速率
+    Serial.println("System Start");//印出System Start 訊息
    MacData = GetMacAddress() ; //取得網路卡編號
-   initGPIO() ;
+   initGPIO() ; //GPIO腳位初始化
 }
 
 

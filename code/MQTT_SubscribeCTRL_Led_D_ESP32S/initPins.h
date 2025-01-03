@@ -70,103 +70,104 @@ void ShowInternet()   // 顯示網路連線資訊
 
 long POW(long num, int expo)  // 計算 num 的 expo 次方
 {
-  long tmp =1 ;
+  long tmp =1 ; //產生tmp回傳變數
   if (expo > 0)
   { 
-        for(int i = 0 ; i< expo ; i++)
-          tmp = tmp * num ;
-         return tmp ; 
+        for(int i = 0 ; i< expo ; i++)  //用迴圈計算次方
+          tmp = tmp * num ; //次方累乘
+         return tmp ; //回傳變數
   } 
   else
   {
-   return tmp ; 
+   return tmp ; //回傳變數
   }
 }
 
 String SPACE(int sp)  // 回傳指定長度的空白字串
 {
-    String tmp = "" ;
-    for (int i = 0 ; i < sp; i++)
+    String tmp = "" ; //產生tmp回傳變數
+    for (int i = 0 ; i < sp; i++) //用迴圈計算指定長度的空白字串
       {
-          tmp.concat(' ')  ;
+          tmp.concat(' ')  ;  //次方累家空白
       }
-    return tmp ;
+    return tmp ;  //回傳變數
 }
 
 String strzero(long num, int len, int base)  // 將數值轉為指定進位並補 0
 {
-  String retstring = String("");
-  int ln = 1 ;
-    int i = 0 ; 
-    char tmp[10] ;
-    long tmpnum = num ;
-    int tmpchr = 0 ;
+  String retstring = String("");  //產生retstring回傳變數
+  int ln = 1 ;  //暫存變數
+    int i = 0 ;   //計數器
+    char tmp[10] ;  //暫存變數
+    long tmpnum = num ; //暫存變數
+    int tmpchr = 0 ;  //暫存變數
     char hexcode[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'} ;
-    while (ln <= len)
+    //建立=0~9，A~F 對應字元陣列
+    while (ln <= len) //用迴圈計算回傳字串
     {
-        tmpchr = (int)(tmpnum % base) ;
-        tmp[ln-1] = hexcode[tmpchr] ;
-        ln++ ;
-         tmpnum = (long)(tmpnum/base) ;
+        tmpchr = (int)(tmpnum % base) ; //計算n進位值
+        tmp[ln-1] = hexcode[tmpchr] ; //根據n進位值取對應字元
+        ln++ ;  //計數器+1
+         tmpnum = (long)(tmpnum/base) ; //根據n進位值退一位
     }
-    for (i = len-1; i >= 0 ; i --)
+    for (i = len-1; i >= 0 ; i --)  //用迴圈累加回傳字串
       {
-          retstring.concat(tmp[i]);
+          retstring.concat(tmp[i]); //累加回傳字串
       }
-  return retstring;
+  return retstring; //回傳變數
 }
 
 unsigned long unstrzero(String hexstr, int base)  // 將字串轉換為數值
 {
-  int len = hexstr.length() ;
-  unsigned long tmpnum = 0 ;
-  String hexcode = String("0123456789ABCDEF") ;
+  int len = hexstr.length() ; //取得字串長度
+  unsigned long tmpnum = 0 ;  //暫存變數
+  String hexcode = String("0123456789ABCDEF") ; //建立=0~9，A~F 對應字元陣列
 
-  for (int i = 0 ; i < len ; i++)
+  for (int i = 0 ; i < len ; i++) //用迴圈計算回傳字串
   {
-      hexstr.toUpperCase() ;
-      int tmp = hexstr.charAt(i) ;
-      int tmp1 = hexcode.indexOf(tmp) ;
-      tmpnum = tmpnum + tmp1 * POW(base, (len - i - 1));
+      hexstr.toUpperCase() ;  //轉成大寫字元
+      int tmp = hexstr.charAt(i) ;  //根據值取對應字元
+      int tmp1 = hexcode.indexOf(tmp) ; //根據值取對應字元
+      tmpnum = tmpnum + tmp1 * POW(base, (len - i - 1));  //產生回傳文字
   }
-  return tmpnum;
+  return tmpnum;  //回傳變數
 }
 
 String  print2HEX(int number)  // 將數字轉換為 2 位元 16 進位格式
 {
-  String ttt ;
-  if (number >= 0 && number < 16)
+  String ttt ;  //回傳變數
+  if (number >= 0 && number < 16) //判斷正確區間
   {
-    ttt = String("0") + String(number,HEX);
+    ttt = String("0") + String(number,HEX); //產生回傳字元(前加0)
   }
   else
   {
-      ttt = String(number,HEX);
+      ttt = String(number,HEX); //產生回傳字元 
   }
-  return ttt ;
+  return ttt ;  //回傳變數
 }
 
 String GetMacAddress()    // 取得網路卡的 MAC 位址
 {
-  String Tmp = "" ;
-  byte mac[6];
-  WiFi.macAddress(mac);
-  for (int i=0; i<6; i++)
+  String Tmp = "" ; //回傳變數
+  byte mac[6];  //產生MAC byte陣列
+  WiFi.macAddress(mac); //取得MAC Address回傳MAC byte陣列
+  for (int i=0; i<6; i++) //迴圈轉出MAC byte陣列
     {
-        Tmp.concat(print2HEX(mac[i])) ;
+        Tmp.concat(print2HEX(mac[i])) ; //累加十六進為型態之byte內容
     }
-    Tmp.toUpperCase() ;
-  return Tmp ;
+    Tmp.toUpperCase() ; //轉成大寫字元
+  return Tmp ;   //回傳變數
 }
 
 void ShowMAC()  // 顯示 MAC 位址於串列埠
 {
   Serial.print("MAC Address:(");
-  Serial.print(MacData) ;
+  Serial.print(MacData) ; 顯示 MAC 位址變數
   Serial.print(")\n");
 }
 
-String IpAddress2String(const IPAddress& ipAddress)
+String IpAddress2String(const IPAddress& ipAddress)//轉換ip特殊變數型態為字串
 {
   // 將 IPAddress 型態轉換為字串格式，並以 "." 分隔各段
   return String(ipAddress[0]) + String(".") +\
@@ -175,16 +176,16 @@ String IpAddress2String(const IPAddress& ipAddress)
   String(ipAddress[3])  ; 
 }
 
-String chrtoString(char *p)
+String chrtoString(char *p) // 將字元陣列轉換為 String 字串
 {
     // 將字元陣列轉換為 String 字串
-    String tmp ;
-    char c ;
-    int count = 0 ;
-    while (count <100)
+    String tmp ;  //產生回傳字串變數
+    char c ;  //站存字元變數
+    int count = 0 ; //計數器
+    while (count <100)  //迴圈轉出char字元陣列
     {
-        c= *p ;
-        if (c != 0x00)
+        c= *p ; // 取得指標的字元內容
+        if (c != 0x00)  // 判斷是否到最後，最後為0x00
           {
             tmp.concat(String(c)) ; // 逐字元加入 String 字串
           }
@@ -192,52 +193,52 @@ String chrtoString(char *p)
           {
               return tmp ; // 若遇到結束符號則返回結果
           }
-       count++ ;
-       p++;
+       count++ ;  //計數器+1
+       p++; //指標+1，往後取字串
     }
 }
 
 void CopyString2Char(String ss, char *p)
 {
   // 將 String 字串複製到 char 陣列
-  if (ss.length() <=0)
+  if (ss.length() <=0)  //判斷是否為空字串
       {
-           *p =  0x00 ;
+           *p =  0x00 ; // 填入字串最後0x00
           return ;
       }
-    ss.toCharArray(p, ss.length()+1) ;
+    ss.toCharArray(p, ss.length()+1) ;  // 利用字串轉字元涵式轉字元
 }
 
 String constchar2String(char *p)
 {
   // 將 char 陣列轉換為 String 字串
-  int i=0 ;
-  String tmp ="";
-  while (true)
+  int i=0 ; //計數器
+  String tmp =""; //產生回傳字串變數
+  while (true)  // 迴圈取字串
   {
     if (*(p+i) == '\0') // 檢查結束符號
-      return tmp ;
-    tmp.concat(*(p+i)) ;
+      return tmp ;  //回傳字串變數
+    tmp.concat(*(p+i)) ;  //累加字串
   }
 }
 
 boolean CharCompare(char *p, char *q)
 {
   // 比較兩個 char 陣列內容是否相同
-  boolean flag = false ;
-  int count = 0 ;
-  int nomatch = 0 ;
-  while (flag <100)
+  boolean flag = false ;  //設定旗標
+  int count = 0 ; //產生計數器
+  int nomatch = 0 ; //產生不相同計數器
+  while (flag <100) //迴圈判斷是否相同
   {
-      if (*(p+count) == 0x00 or *(q+count) == 0x00)
-        break ;
-      if (*(p+count) != *(q+count) )
+      if (*(p+count) == 0x00 or *(q+count) == 0x00) //判斷是否比較字串到最後
+        break ;//離開迴圈
+      if (*(p+count) != *(q+count) )  //如果有不相同
           {
-             nomatch ++ ; 
+             nomatch ++ ;   //不相同計數器+1
           }
-         count++ ; 
+         count++ ;  //計數器+1
   }
- if (nomatch >0)
+ if (nomatch >0)//判斷不相同計數器
   {
     return false ; // 若有不匹配則返回 false
   }
@@ -259,7 +260,7 @@ String Double2Str(double dd,int decn)
     }
     if (decn >0)
     {
-        return String(a1)+"."+ String(a3) ;
+        return String(a1)+"."+ String(a3) ; //產生有小數點位數的字串
     }
     else
     {
@@ -267,31 +268,31 @@ String Double2Str(double dd,int decn)
     }
 }
 
-void LedOFF()
+void LedOFF() // 關閉 LED
 {
   // 關閉 LED
-  digitalWrite(LedPin,OFF) ;
+  digitalWrite(LedPin,OFF) ;//LedPin腳位關閉電位
 }
 
-void LedON()
+void LedON()   // 開啟 LED
 {
   // 開啟 LED
-  digitalWrite(LedPin,ON) ;
+  digitalWrite(LedPin,ON) ;//LedPin腳位開啟電位
 }
 
-void LedTwinkle()
+void LedTwinkle() //Led燈閃爍
 {
   // 讓 LED 閃爍 5 次
   for(int i = 0;i<5; i++)
     {
-      LedON();
+      LedON();  // 開啟 LED
       sleep(10); // 開啟 10 毫秒
-      LedOFF();
+      LedOFF(); // 關閉 LED
       sleep(10); // 關閉 10 毫秒
     }
 }
 
-void initGPIO()
+void initGPIO() //GPIO腳位初始化
 {
    // 初始化 GPIO 並將 LED 設為輸出
    pinMode(LedPin,OUTPUT) ;
